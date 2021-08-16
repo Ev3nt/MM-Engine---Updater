@@ -32,15 +32,15 @@ BOOL main()
 	{
 		DWORD handle;
 		DWORD size = GetFileVersionInfoSize("MM Engine.exe", &handle);
-	
+
 		LPSTR buffer = new char[size];
 		GetFileVersionInfo("MM Engine.exe", handle, size, buffer);
-	
+
 		VS_FIXEDFILEINFO* verInfo;
 		size = sizeof(VS_FIXEDFILEINFO);
 		VerQueryValue(buffer, "\\", (LPVOID*)&verInfo, (UINT*)&size);
 		delete[] buffer;
-	
+
 		buffer = (LPSTR)calloc(MAX_PATH, sizeof(char));
 		sprintf_s(buffer, MAX_PATH, "%d.%d.%d.%d\n",
 			(verInfo->dwFileVersionMS >> 16) & 0xffff,
