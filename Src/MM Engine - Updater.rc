@@ -25,12 +25,12 @@ BEGIN
         BLOCK "000004b0"
         BEGIN
             VALUE "CompanyName", "The Mod Makers"
-            VALUE "FileDescription", "Mod Makers Engine"
+            VALUE "FileDescription", "Updater for Mod Makers Engine"
             VALUE "FileVersion", "Version 1.0.0"
-            VALUE "InternalName", "Mod Makers Engine"
+            VALUE "InternalName", "Mod Makers Engine - Updater"
             VALUE "LegalCopyright", "Copyright (C) 2021"
             VALUE "OriginalFilename", "MM Engine - Updater.exe"
-            VALUE "ProductName", "Mod Makers Engine"
+            VALUE "ProductName", "Updater for Mod Makers Engine"
             VALUE "ProductVersion", "Version 1.0.0"
         END
     END
