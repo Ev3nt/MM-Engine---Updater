@@ -10,7 +10,7 @@
 #pragma comment(lib, "GitHub Releases Downloader.lib")
 
 #define MAJOR "1"
-#define MINOR "1"
+#define MINOR "2"
 #define RELEASE "0"
 
 #define UPDATER_VERSION MAJOR "." MINOR "." RELEASE
@@ -21,10 +21,49 @@ void printColored(int color_flags, T arg);
 
 bool fileExists(LPCSTR lpFileName);
 
+struct version
+{
+	int major;
+	int minor;
+	int release;
+};
+
 //------------------------------------------------------------------------------
 
 BOOL main()
 {
+	GitHub::Releases updater("https://github.com/Ev3nt/MM-Engine---Updater");
+
+	version old;
+	sscanf(UPDATER_VERSION, "%d.%d.%d", &old.major, &old.minor, &old.release);
+
+	version newest;
+	for (UINT i = 0; i < updater.GetSize(); i++)
+	{
+		sscanf(updater[i].version.c_str(), "%d.%d.%d", &newest.major, &newest.minor, &newest.release);
+
+		if (newest.major > old.major || newest.minor > old.minor || newest.release > old.release)
+		{
+			remove("MM Engine - Updater Old.exe");
+
+			char buffer[MAX_PATH] = { 0 };
+			GetModuleFileName(GetModuleHandle(NULL), buffer, sizeof(buffer));
+			rename(buffer, "MM Engine - Updater Old.exe");
+
+			updater[i].Download("MM.Engine.-.Updater.exe", "MM Engine - Updater.exe");
+
+			STARTUPINFOA si;
+			ZeroMemory(&si, sizeof(si));
+			si.cb = sizeof(si);
+			PROCESS_INFORMATION pi;
+			ZeroMemory(&pi, sizeof(pi));
+
+			CreateProcess("MM Engine - Updater.exe", "", NULL, NULL, NULL, NULL, NULL, NULL, &si, &pi);
+
+			return FALSE;
+		}
+	}
+
 	GitHub::Releases releases("https://github.com/Ev3nt/MM-Engine");
 
 	printf("%s\n", UPDATER);
