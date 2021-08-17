@@ -4,12 +4,13 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <direct.h>
 
 #include "GHRD.h"
 #pragma comment(lib, "GitHub Releases Downloader.lib")
 
 #define MAJOR "1"
-#define MINOR "0"
+#define MINOR "1"
 #define RELEASE "0"
 
 #define UPDATER_VERSION MAJOR "." MINOR "." RELEASE
@@ -131,6 +132,12 @@ BOOL main()
 
 			std::string asset = line.substr(0, i - 1).c_str();
 			std::string path = line.substr(i + 2, line.size() - i - 2).c_str();
+
+			for (i = 0; i < path.size(); i++)
+				if (path[i] == '\\' || path[i] == '/')
+					_mkdir(path.substr(0, i).c_str());
+
+
 			if (mustbe)
 			{
 				releases[num].Download(asset.c_str(), path.c_str());
